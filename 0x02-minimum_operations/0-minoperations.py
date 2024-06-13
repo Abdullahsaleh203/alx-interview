@@ -1,21 +1,24 @@
 #!/usr/bin/python3
-'''Minimum Operations'''
+""" Module for 0-minoperations"""
 
 def minOperations(n):
-    '''
-    alculates the fewest number of operations needed to
-    result in exactly n H characters
-    '''
-    if n <= 1:  # If n is impossible to achieve
+    """
+    minOperations
+    Gets fewest # of operations needed to result in exactly n H characters
+    """
+    # all outputs should be at least 2 char: (min, Copy All => Paste)
+    if (n < 2):
         return 0
-    num_operations = 0  # number of operations required
-    i = 2  # initialize i to the smallest prime factor
-    # Divide n by its prime factors, starting with the smallest prime factor
-    while i <= n:
-        if n % i == 0:
-            n //= i
-            num_operations += i
-            i = 2  # reset the value of i
-        else:
-            i += 1
-    return num_operations
+    ops, root = 0, 2
+    while root <= n:
+        # if n evenly divides by root
+        if n % root == 0:
+            # total even-divisions by root = total operations
+            ops += root
+            # set n to the remainder
+            n = n / root
+            # reduce root to find remaining smaller vals that evenly-divide n
+            root -= 1
+        # increment root until it evenly-divides n
+        root += 1
+    return ops
