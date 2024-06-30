@@ -43,6 +43,8 @@ Write a method that determines if a given data set represents a valid UTF-8 enco
 - Each integer represents 1 byte of data, therefore you only need to handle the 8 least significant bits of each integer
 
 ```py
+
+
 carrie@ubuntu:~/0x04-utf8_validation$ cat 0-main.py
 #!/usr/bin/python3
 """
