@@ -1,54 +1,56 @@
 #!/usr/bin/python3
-"""
-N queens
-"""
-
 import sys
 
-if len(sys.argv) != 2:
-    print('Usage: nqueens N')
-    exit(1)
 
-try:
-    n_q = int(sys.argv[1])
-except ValueError:
-    print('N must ba a number')
-    exit(1)
+def nqueens(n: int):
+    """
+    backtracking
+    """
+    def backtrack(row, queens, diagonals, anti_diagonals, board):
+        if row == n:
+            # found a valid solution
+            print([[i, j] for i, j in queens])
+            return
 
-if n_q < 4:
-    print('N must ba at least 4')
-    exit(1)
+        for col in range(n):
+            # check if it is safe to place a queen in this position
+            if col not in board and row - \
+                    col not in diagonals and row + col not in anti_diagonals:
+                board.add(col)
+                diagonals.add(row - col)
+                anti_diagonals.add(row + col)
+                queens.append((row, col))
 
+                backtrack(row + 1, queens, diagonals, anti_diagonals, board)
 
-def solve_nqueens(n):
-    ''' self descriptive '''
-    if n == 0:
-        return [[]]
-    inner_solution = solve_nqueens(n - 1)
-    return [solution + [(n, i + 1)]
-            for i in range(n_q)
-            for solution in inner_solution
-            if safe_queen((n, i + 1), solution)]
+                board.remove(col)
+                diagonals.remove(row - col)
+                anti_diagonals.remove(row + col)
+                queens.pop()
 
+    board = set()
+    queens = []
+    diagonals = set()
+    anti_diagonals = set()
 
-def attack_queen(square, queen):
-    '''self descriptive'''
-    (row1, col1) = square
-    (row2, col2) = queen
-    return (row1 == row2) or (col1 == col2) or\
-        abs(row1 - row2) == abs(col1 - col2)
+    backtrack(0, queens, diagonals, anti_diagonals, board)
 
-
-def safe_queen(sqr, queens):
-    '''self descriptive'''
-    for queen in queens:
-        if attack_queen(sqr, queen):
-            return False
-    return True
+    if not queens:
+        print("No solution found for {}-queens.".format(n))
 
 
-for answer in reversed(solve_nqueens(n_q)):
-    result = []
-    for p in [list(p) for p in answer]:
-        result.append([i - 1 for i in p])
-    print(result)
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: nqueens N")
+        exit(1)
+
+    try:
+        n = int(sys.argv[1])
+        if n < 4:
+            print("N must be at least 4")
+            exit(1)
+    except ValueError:
+        print("N must be a number")
+        exit(1)
+
+    nqueens(n)
