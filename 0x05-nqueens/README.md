@@ -1,7 +1,7 @@
 0x05. N Queens
 ==============
 
-- By Dev Nderitu
+
 
 Requirements
 ------------
