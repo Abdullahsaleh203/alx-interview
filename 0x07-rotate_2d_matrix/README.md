@@ -3,8 +3,7 @@
 
 Algorithm Python
 
--   By Jesse Hedden, Software Engineer
--   Weight: 1
+
 
 Requirements
 ------------
