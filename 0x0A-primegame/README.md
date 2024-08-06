@@ -1,111 +1,84 @@
-0x00. Pascal's Triangle
-=======================
+0x0A. Prime Game
+================
 
-Algorithm Python
+AlgorithmPython
 
-### Concepts
 
-*For this project, we expect you to look at this concept:*
+Requirements
+------------
 
-- [Technical interview](https://alx-intranet.hbtn.io/concepts/100005)
+### General
+
+-   Allowed editors: `vi`, `vim`, `emacs`
+-   All your files will be interpreted/compiled on Ubuntu 14.04 LTS using `python3` (version 3.4.3)
+-   All your files should end with a new line
+-   The first line of all your files should be exactly `#!/usr/bin/python3`
+-   A `README.md` file, at the root of the folder of the project, is mandatory
+-   Your code should use the `PEP 8` style (version 1.7.x)
+-   All your files must be executable
 
 Tasks
 -----
 
-### 0\. Pascal's Triangle
+### 0\. Prime Game
 
+mandatory
 
+Maria and Ben are playing a game. Given a set of consecutive integers starting from `1` up to and including `n`, they take turns choosing a prime number from the set and removing that number and its multiples from the set. The player that cannot make a move loses the game.
 
-Create a function `def pascal_triangle(n):` that returns a list of lists of integers representing the Pascal's triangle of `n`:
+They play `x` rounds of the game, where `n` may be different for each round. Assuming Maria always goes first and both players play optimally, determine who the winner of each game is.
 
-- Returns an empty list if `n <= 0`
-- You can assume `n` will be always an integer
+-   Prototype: `def isWinner(x, nums)`
+-   where `x` is the number of rounds and `nums` is an array of `n`
+-   Return: name of the player that won the most rounds
+-   If the winner cannot be determined, return `None`
+-   You can assume `n` and `x` will not be larger than 10000
+-   You cannot import any packages in this task
+
+Example:
+
+-   `x` = `3`, `nums` = `[4, 5, 1]`
+
+First round: `4`
+
+-   Maria picks 2 and removes 2, 4, leaving 1, 3
+-   Ben picks 3 and removes 3, leaving 1
+-   Ben wins because there are no prime numbers left for Maria to choose
+
+Second round: `5`
+
+-   Maria picks 2 and removes 2, 4, leaving 1, 3, 5
+-   Ben picks 3 and removes 3, leaving 1, 5
+-   Maria picks 5 and removes 5, leaving 1
+-   Maria wins because there are no prime numbers left for Ben to choose
+
+Third round: `1`
+
+-   Ben wins because there are no prime numbers for Maria to choose
+
+**Result: Ben has the most wins**
 
 ```
-guillaume@ubuntu:~/0x00$ cat 0-main.py
+carrie@ubuntu:~/0x0A-primegame$ cat main_0.py
 #!/usr/bin/python3
-"""
-0-main
-"""
-pascal_triangle = __import__('0-pascal_triangle').pascal_triangle
 
-def print_triangle(triangle):
-    """
-    Print the triangle
-    """
-    for row in triangle:
-        print("[{}]".format(",".join([str(x) for x in row])))
+isWinner = __import__('0-prime_game').isWinner
 
-if __name__ == "__main__":
-    print_triangle(pascal_triangle(5))
+print("Winner: {}".format(isWinner(5, [2, 5, 1, 4, 3])))
 
-guillaume@ubuntu:~/0x00$
-guillaume@ubuntu:~/0x00$ ./0-main.py
-[1]
-[1,1]
-[1,2,1]
-[1,3,3,1]
-[1,4,6,4,1]
-guillaume@ubuntu:~/0x00$
+carrie@ubuntu:~/0x0A-primegame$
+
+```
+
+```
+carrie@ubuntu:~/0x0A-primegame$ ./main_0.py
+Winner: Ben
+carrie@ubuntu:~/0x0A-primegame$
 
 ```
 
 **Repo:**
 
-- GitHub repository: `alx-interview`
-- Directory: `0x00-pascal_triangle`
-- File: `0-pascal_triangle.py`
-
-**SOLUTION**
-
-```
-def pascal_triangle(n):
-    """
-         returns a list of lists of
-         integers representing
-          the Pascal’s triangle of n
-         Returns an empty list if n <= 0
-    """
-    if n <= 0:
-        return []
-    triangle = [[1]]
-    for i in range(1, n):
-        row = [1]
-        for j in range(1, i):
-            row.append(triangle[i - 1][j - 1] + triangle[i - 1][j])
-        row.append(1)
-        triangle.append(row)
-    return triangle
-
------------------------------------------------------------------
-The pascal_triangle function you provided generates Pascal's triangle up to a given number of rows n. Pascal's triangle is a triangular array of binomial coefficients, named after the French mathematician Blaise Pascal. Each number in the triangle is the sum of the two numbers directly above it.
-
------------------------------------------------------------------
-
-The function starts by checking if n is less than or equal to 0.
-If it is, an empty list is returned because Pascal's triangle is not defined for non-positive values of n.
-
-If n is greater than 0, an initial row [1] is added to the triangle list.
-This represents the first row of Pascal's triangle, which always contains a single element, 1.
-
-Then, a loop runs from 1 to n-1 (excluding n).
-This loop generates each row of the triangle starting from the second row.
-
-Inside the loop, a new row list is initialized with the first element as 1.
-This represents the leftmost element of each row, which is always 1.
-
-Another loop runs from 1 to i-1 (excluding i), where i is the current row number.
-This loop calculates the values between the leftmost and rightmost elements of each row.
-
-Inside the nested loop, the value at position (i-1, j-1) and the value
-at position (i-1, j) in the previous row are added together and appended to the current row.
-This step computes the binomial coefficients.
-
-After the nested loop, the rightmost element of each row, which is always 1, is appended to the row.
-
-Finally, the completed row is appended to the triangle list.
-
-After the outer loop completes, the function returns the triangle list,
-which represents Pascal's triangle up to n rows.
-
-```
+-   GitHub repository: `alx-interview`
+-   Directory: `0x0A-primegame`
+-   File: `0-prime_game.py`
